@@ -1,5 +1,6 @@
+// src/App.js
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import RegisterDepartment from "./Components/AdminRegistration/RegisterDepartment";
 import RegisterInstructor from "./Components/AdminRegistration/RegisterInstructor";
@@ -15,65 +16,115 @@ import ManageSchedule from "./Components/Departments/ManageSchedule";
 
 import VerifyEnrollment from "./Components/Departments/VerifyEnrollment";
 import ApplicationsForWithdraw from "./Components/Departments/WithdrawCourses";
-//---------------------------
 
 import InstructorProfile from "./Components/Instructor/InstructorProfile";
 import CourseDetails from "./Components/Instructor/CourseDetails";
 import Marking from "./Components/Instructor/Marking";
 import AssignMarks from "./Components/Instructor/AssignMarks";
 
-//result
-
 import AssignResults from "./Components/AssigningResults/AssignResults";
 import StudentsInClass from "./Components/AssigningResults/StudentsInClass";
 import AssignSemesterResult from "./Components/AssigningResults/AssignSemesterResult";
 
 import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer";   // 👈 Added Footer import
 import SignIn from "./Components/SignIn";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 const App = () => {
   return (
     <Router>
       <Navbar />
-      <Routes>
-        {/*<Route exact path="/registerdepartment" element={<RegisterDepartment />} /> */}
 
-        <Route exact path="/registerdepartment" element={<RegisterDepartment />} />
-        <Route exact path="/registerinstructor" element={<RegisterInstructor />} />
-        <Route exact path="/registercourse" element={<RegisterCourse />} />
+      {/* Flex wrapper to push footer down */}
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-grow">
+          <Routes>
+            {/* Public route */}
+            <Route path="/signin" element={<SignIn />} />
 
+            {/* Admin protected routes */}
+            <Route
+              path="/registerdepartment"
+              element={
+                <ProtectedRoute>
+                  <RegisterDepartment />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/registerinstructor"
+              element={
+                <ProtectedRoute>
+                  <RegisterInstructor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/registercourse"
+              element={
+                <ProtectedRoute>
+                  <RegisterCourse />
+                </ProtectedRoute>
+              }
+            />
 
-        {/* -------------------------  */}
-        <Route path="/department-profile" element={<DepartmentProfile />} />
-        <Route path="/assign-courses" element={<AssignCourses />} />
-        <Route path="/student-creation" element={<StudentCreation />} />
-        <Route path="/class-schedule" element={<ClassSchedule />} />
-        <Route path="/class-schedule/:id" element={<ManageSchedule />} />
+            {/* Department routes */}
+            <Route path="/department-profile" element={<DepartmentProfile />} />
+            <Route path="/assign-courses" element={<AssignCourses />} />
+            <Route path="/student-creation" element={<StudentCreation />} />
+            <Route path="/class-schedule" element={<ClassSchedule />} />
+            <Route path="/class-schedule/:id" element={<ManageSchedule />} />
+            <Route path="/checkthenrollment" element={<DepartmentClasses />} />
+            <Route path="/verify-enrollment/:classId" element={<ClassStudents />} />
+            <Route
+              path="/verify-enrollment/:classId/:studentId"
+              element={<VerifyEnrollment />}
+            />
+            <Route
+              path="/withdraw-enrollment/:classId/:studentId"
+              element={<ApplicationsForWithdraw />}
+            />
 
-        <Route path="/checkthenrollment" element={<DepartmentClasses />} />
-        <Route path="/verify-enrollment/:classId" element={<ClassStudents />} />
+            {/* Instructor routes */}
+            <Route path="/instructor-profile" element={<InstructorProfile />} />
+            <Route
+              path="/course-details/:assignCourseId"
+              element={<CourseDetails />}
+            />
+            <Route
+              path="/marking-details/:assignCourseId"
+              element={<Marking />}
+            />
+            <Route
+              path="/assign-marks/:assignCourseId"
+              element={<AssignMarks />}
+            />
 
-        <Route path="/verify-enrollment/:classId/:studentId" element={<VerifyEnrollment />} />
-        <Route path="/withdraw-enrollment/:classId/:studentId" element={<ApplicationsForWithdraw />} />
+            {/* Results routes */}
+            <Route path="/assignResults" element={<AssignResults />} />
+            <Route
+              path="/students-in-class/:classId"
+              element={<StudentsInClass />}
+            />
+            <Route
+              path="/edit-profile/:classId/:studentId"
+              element={<AssignSemesterResult />}
+            />
+            <Route
+              path="/assign-results/:classId/:studentId"
+              element={<AssignSemesterResult />}
+            />
 
-        {/*Instructor*/}
+            {/* Default redirect */}
+            <Route path="/" element={<Navigate to="/signin" replace />} />
+            <Route path="*" element={<Navigate to="/signin" replace />} />
+          </Routes>
+        </main>
 
-        <Route path="/instructor-profile" element={<InstructorProfile />} />
-        <Route path="/course-details/:assignCourseId" element={<CourseDetails />} />
-        <Route path="/marking-details/:assignCourseId" element={<Marking />} />
-        <Route path="/assign-marks/:assignCourseId" element={<AssignMarks />} />
-        <Route exact path="/" element={<SignIn />} />
-
-        {/*Results*/}
-
-        <Route path="/assignResults" element={<AssignResults />} />
-        <Route path="/students-in-class/:classId" element={<StudentsInClass />} />
-        <Route path="/edit-profile/:classId/:studentId" element={<AssignSemesterResult />} />
-        <Route path="/assign-results/:classId/:studentId" element={<AssignSemesterResult />} />
-
-
-
-      </Routes>
+        {/* Footer appears on every page */}
+        <Footer />
+      </div>
     </Router>
   );
 };
