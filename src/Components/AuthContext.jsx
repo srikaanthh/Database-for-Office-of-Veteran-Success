@@ -1,54 +1,20 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth, fs } from '../Config/Config'; // Ensure you import auth and fs from your Firebase config
+// src/Components/AuthContext.js
+import React, { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [userType, setUserType] = useState("");
+  // Initialize from localStorage to persist across refresh/incognito
+  const initialAuth = localStorage.getItem("adminAuthenticated") === "true";
+  const initialUserType = initialAuth ? "admin" : "";
 
-  useEffect(() => {
-    const fetchUserType = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          const departmentDoc = await fs.collection("departments").doc(user.uid).get();
-          if (departmentDoc.exists) {
-            setUserType("department");
-          } else {
-            const instructorDoc = await fs.collection("instructors").doc(user.uid).get();
-            if (instructorDoc.exists) {
-              setUserType("instructor");
-            } else {
-              // Assuming admin is the fallback if not found in department or instructor
-              setUserType("admin");
-            }
-          }
-        } catch (error) {
-          console.error("Error fetching user type: ", error);
-          setUserType(""); // Set to empty if there's an error
-        }
-      } else {
-        setUserType(""); // No user is logged in
-      }
-    };
-
-    // Fetch user type when component mounts
-    fetchUserType();
-
-    // Optionally, you can set up a listener for auth state changes
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        fetchUserType();
-      } else {
-        setUserType(""); // No user is logged in
-      }
-    });
-
-    return () => unsubscribe(); // Cleanup subscription on unmount
-  }, [setUserType]);
+  const [isAuthenticated, setIsAuthenticated] = useState(initialAuth);
+  const [userType, setUserType] = useState(initialUserType);
 
   return (
-    <AuthContext.Provider value={{ userType, setUserType }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, userType, setUserType }}
+    >
       {children}
     </AuthContext.Provider>
   );
