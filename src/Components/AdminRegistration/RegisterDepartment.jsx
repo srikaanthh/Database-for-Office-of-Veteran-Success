@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fs } from '../../Config/Config';
 import { Circles } from 'react-loader-spinner';
-// Removed unused Footer import
+import Footer from '../Footer'; 
 
 const SessionDataView = () => {
     const [sessionData, setSessionData] = useState([]);

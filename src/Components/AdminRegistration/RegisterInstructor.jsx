@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fs } from '../../Config/Config';
 import { Circles } from 'react-loader-spinner';
-import { FiEdit2, FiPlus, FiX, FiUserPlus, FiTrash2, FiSearch, FiGrid, FiList, FiCalendar, FiBook, FiUsers, FiClock, FiMapPin, FiDollarSign } from 'react-icons/fi';
+import { FiEdit2, FiPlus, FiX, FiUserPlus, FiTrash2, FiSearch, FiChevronDown, FiFilter, FiGrid, FiList, FiCalendar, FiBook, FiUsers, FiClock, FiMapPin, FiDollarSign } from 'react-icons/fi';
 
 const RegisterInstructor = () => {
   const [instructor, setInstructor] = useState({
@@ -45,7 +45,7 @@ const RegisterInstructor = () => {
   const [sortBy, setSortBy] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
   const [statusFilter, setStatusFilter] = useState('all');
-  // removed unused expandedCard state
+  const [expandedCard, setExpandedCard] = useState(null);
 
   // Fetch instructors from Firestore
   const fetchInstructors = async () => {

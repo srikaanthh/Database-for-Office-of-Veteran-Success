@@ -32,7 +32,6 @@ import SignIn from "./Components/SignIn";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import ModernChatbot from "./Components/ModernChatbot"; // Import ModernChatbot
 
-
 const App = () => {
   return (
     <Router>
