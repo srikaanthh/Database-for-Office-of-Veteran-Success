@@ -17,26 +17,9 @@ These technologies combine to create an interactive and seamless interface for e
 
 ## Project Overview
 
-The **Database for Office of Veteran Success** is a comprehensive academic management platform designed to manage users, departments, courses, classes, enrollments, attendance, assessments, and student results. It features role-based access control for Admins, Department Heads, and Instructors, ensuring secure and efficient academic operations across the organization.
+The **Database for Office of Veteran Success** is a comprehensive academic management platform designed to manage users, departments, courses, classes, enrollments, attendance, assessments, and student count. It features role-based access control for Admins, Department Heads, and Instructors, ensuring secure and efficient academic operations across the organization.
 
-- Role-based access system with distinct permissions for Admins, Department Heads, and Instructors.
-- Admins can register new instructors to the system.
-- Admins can create, edit, and delete university departments.
-- Admins can create, edit, and delete courses, including setting course names, descriptions, and prerequisites.
-- Department Heads can create and manage classes within their assigned departments.
-- Department Heads can assign courses to classes and allocate instructors to specific courses.
-- Department Heads can approve or reject student course enrollment requests.
-- Enrollment requests are automatically blocked if students do not meet the required course prerequisites.
-- Department Heads can automatically calculate GPAs based on the grades submitted by instructors.
-- Department Heads can compile and save final student results.
-- Instructors can view courses and classes assigned to them by the department.
-- Instructors can view lists of students enrolled in their classes.
-- Instructors can mark and update student attendance for specific dates.
-- Instructors can create assessments and define grading criteria for each course.
-- Instructors can assign marks to students for each assessment.
-- All submitted grades are automatically forwarded to the department for GPA calculation and final result compilation.
-- Data storage and management are handled using Firebase Firestore and Firebase Backend Services.
-- Secure login and role-based access control are implemented using Firebase Authentication.
+
 
 With real updates, a responsive interface, and intuitive navigation, users can efficiently track their academic progress and directly communicate with their departments through the system.
 
@@ -134,3 +117,4 @@ The app will run in development mode. Open [http://localhost:3000](http://localh
 
 ## Summary
 The **Database for Office of Veteran Success** provides complete academic workflow management with role-based permissions for Admins, Department Heads, and Instructors, ensuring seamless coordination across departments, classes, and student records.
+
